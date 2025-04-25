@@ -122,16 +122,14 @@ class BankAccountManager:
                     os.remove(CONFIG_FILE)
                 print(f"\nAttempt {attempt}: Invalid credentials. Please try again...\n")
 
-    def create_account(self, name, pin):
-        # Generate a random account number
+    def create_account(self, name, pin, amount):
         account_number = str(random.randint(100000000000, 999999999999))
         encrypted_pin = self.encrypt_pin(pin)
         cursor = self.conn.cursor()
-        # cursor.execute(f"USE {self.DB_NAME}")
         cursor.execute(f"""
             INSERT INTO {self.TABLE_NAME} (account_holder_name, account_number, amount, pin)
             VALUES (%s, %s, %s, %s)
-        """, (name, account_number, 0.0, encrypted_pin))
+        """, (name, account_number, amount, encrypted_pin))
         self.conn.commit()
         cursor.close()
         print(f"Account created successfully! Account Number: {account_number}")

@@ -19,6 +19,11 @@ def run():
 
         if choice == "1":
             name = input("Enter account holder name: ")
+            amount = float(input("Enter amount to initial deposit: "))
+            if amount <= 0:
+                print("Amount must be greater than zero.")
+                continue
+
             while True:
                 pin = getpass("Enter your 4-6 digit numeric PIN: ")
                 if not pin.isdigit():
@@ -28,7 +33,7 @@ def run():
                 else:
                     break
             
-            bank.create_account(name, pin)
+            bank.create_account(name, pin, amount)
 
         elif choice == "2":
             acc_num = input("Enter account number: ")
